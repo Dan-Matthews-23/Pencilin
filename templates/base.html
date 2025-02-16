@@ -50,38 +50,26 @@
                                     <button class="btn nav-link-font  dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false">
                                         {% if request.user.is_authenticated %}
-                                        {{user.username}}
+                                        Welcome back, {{user.username}}!
                                         {% else %}
                                         Username
                                         {% endif %}
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark">
-                                        <li><a class="dropdown-item" href="{% url 'render_profile' %}">Your profile</a>
+                                        <li><a class="dropdown-item" href="">Your profile</a>
                                         </li>
                                         {% if request.user.is_superuser %}
-                                        <li><a href="{% url 'manage_products' %}" class="dropdown-item">Add/Remove
+                                        <li><a href="" class="dropdown-item">Add/Remove
                                                 items</a>
                                         </li>
                                         {% endif %}
                                 </li>
                                 <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
                             </ul>
+                            {% endif %}
                         </li>
                     </ul>
-                    {% else %}
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <button class="btn nav-link-font  dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Log in
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="{% url 'account_login' %}">Log in</a></li>
-                                <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    {% endif %}
+
                     </ul>
                 </div>
             </div>

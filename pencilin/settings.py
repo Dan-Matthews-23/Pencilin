@@ -16,6 +16,7 @@ SECRET_KEY = 'django-insecure-joy+6=iv=*rowm9d@u9=7m*ndl6vb094c5j=o5qoyq#c3r%5cs
 DEBUG = True
 
 ALLOWED_HOSTS = ['8000-danmatthews23-pencilin-b9fqu4l8urn.ws-eu117.gitpod.io']
+CSRF_TRUSTED_ORIGINS = ['https://8000-danmatthews23-pencilin-b9fqu4l8urn.ws-eu117.gitpod.io']
 
 
 # Application definition
