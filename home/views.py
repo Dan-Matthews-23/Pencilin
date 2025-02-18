@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from accounts.models import UserProfile
 from events.models import Event, EventMembers
@@ -7,26 +7,36 @@ def get_user(request):
     user = get_object_or_404(UserProfile, user=request.user)
     return user
 
-def home(request, event_detail):
-    if not request.user.is_authenticated:
-        return redirect('account_login')  # Redirect to login if not logged in
-    # Otherwise, handle the logged-in case (e.g., show a welcome page)
-    context = {'event_detail': event_detail}
-    return render(request, 'home/index.html', context)
+def get_events(request):
+    user = get_user(request)
+    # Use filter() instead of get() to handle cases where there are no events
+    fetch_events = Event.objects.filter(user_profile=user)
+    if fetch_events.exists():  # Check if any events exist
+        events = {
+            'fetch_events': fetch_events,  # Pass the queryset directly
+        }
+    else:
+        #events = "You have no events"  # Or, better, an empty queryset
+        events = fetch_events #This returns an empty queryset which is better than a string.
+    return events
 
-def events(request, user):    
-    try:
-        events = get_object_or_404(Events, user_profile=user)
-        for event in events:
-            print(event.event_name, event.event_id, event.date_time)                    
-    except Events.DoesNotExist:
-        events = None
-    event_items = events.lineitems.all()
-    template = 'account/order_history.html'
-    context = {
-        'event': event,       
-    }
-    return event_detail
+def home(request):
+    if not request.user.is_authenticated:
+        return redirect('account_login')
+    user = get_user(request)
+    events = get_events(request)
+    print(f"Username is {user}")
+    print(f"{events}")
+    # Access events in your template:
+    # {% if events.fetch_events %}
+    #     {% for event in events.fetch_events %}
+    #         {{ event.event_name }} - {{ event.date_time }}<br>
+    #     {% endfor %}
+    # {% else %}
+    #     {{ events }}  (Or handle the no-events case gracefully)
+    # {% endif %}
+    return render(request, 'home/index.html', {'events': events}) # Pass 'events' to the template
+
 
 
 

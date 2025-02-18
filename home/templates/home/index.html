@@ -1,3 +1,12 @@
 {% extends "base.html" %}
 
 HOME PAGE
+
+
+{% if events.fetch_events %}
+{% for event in events.fetch_events %}
+{{ event.event_name }} - {{ event.date_time }}<br>
+{% endfor %}
+{% else %}
+{{ events }}
+{% endif %}
