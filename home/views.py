@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from accounts.models import UserProfile
-from events.models import Event, EventItem
+from events.models import Event, EventMembers
 
 def get_user(request):
     user = get_object_or_404(UserProfile, user=request.user)

@@ -17,10 +17,10 @@ class Event(models.Model):
         return self.event_name
 
 
-class EventItem(models.Model):
+class EventMembers(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE,
                                related_name='items')
     user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
                                      null=True, blank=True,
-                                     related_name='event_item')    
+                                     related_name='member_profile')    
     date_time = models.DateTimeField(auto_now_add=True)
