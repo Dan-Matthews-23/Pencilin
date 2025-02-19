@@ -5,22 +5,25 @@ import datetime
 
 
 class Event(models.Model):
-    event_id = models.AutoField(primary_key=True)
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
+    id = models.AutoField(primary_key=True)
+    creator = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
                                      null=True, blank=True,
                                      related_name='event')    
-    event_name = models.CharField(max_length=32,
-                                    null=False, editable=False, default="Test")    
-    date_time = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100,
+                                    null=False, default="Test")
+    description = models.CharField(max_length=2000, null=True)
+    date_created = models.DateField(auto_now_add=True)
+    date_event =  models.DateField(auto_now_add=True)#auto_now_add=True)    
 
     def __str__(self):
-        return self.event_name
+        return self.name
 
 
 class EventMembers(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE,
                                related_name='items')
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
+    member = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
                                      null=True, blank=True,
                                      related_name='member_profile')    
-    date_time = models.DateTimeField(auto_now_add=True)
+    date_invited = models.DateField(auto_now_add=True)
+    accepted =  models.BooleanField(null=True, blank=True)

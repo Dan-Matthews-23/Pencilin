@@ -10,7 +10,7 @@ def get_user(request):
 def get_events(request):
     user = get_user(request)
     # Use filter() instead of get() to handle cases where there are no events
-    fetch_events = Event.objects.filter(user_profile=user)
+    fetch_events = Event.objects.filter(creator=user)
     if fetch_events.exists():  # Check if any events exist
         events = {
             'fetch_events': fetch_events,  # Pass the queryset directly

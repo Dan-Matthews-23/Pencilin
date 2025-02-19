@@ -1,22 +1,31 @@
 from django.contrib import admin
 from .models import Event, EventMembers
 
+class EventAdmin(admin.ModelAdmin):
+    model = Event   
+    list_display = (
+        'id', 
+        'creator', 
+        'name', 
+        'description',
+        'date_created',
+        'date_event',
+        )
+    #ordering = ('-id',)
+
+
 class EventMembersAdmin(admin.ModelAdmin):
     model = EventMembers
-    #fields = ('event', 'user_profile', 'date_time')
-    list_display = ('event', 'user_profile', 'date_time')
     
-    
-
-class EventAdmin(admin.ModelAdmin):
-    model = Event
-    #fields = ('event_id', 'user_profile', 'event_name', 'date_time',)
-    list_display = ('event_id', 'user_profile', 'event_name', 'date_time',)
-    #ordering = ('-event_id',)
+    list_display = (
+        'event', 
+        'member', 
+        'date_invited',
+        'accepted',
+        )
 
 
 
 admin.site.register(EventMembers, EventMembersAdmin)
 admin.site.register(Event, EventAdmin)
-
 
